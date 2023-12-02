@@ -13,12 +13,14 @@ function Bookmarks() {
   ];
 
   return (
-    <div className='p-10 flex-col justify-center bg-stone-800 text-orange-500'>
+    <div className='p-10 flex-col justify-center bg-stone-800 text-orange-500 w-full'>
       <h2>This is Your book marks</h2>
       {bookMarkList.map(({ title, url }) => {
         return (
-          <div key={url} className='text-white text-center'>
-            <a href={url}>{title}</a>
+          <div key={url} className='text-white text-left'>
+            <a href={url} target='_blank'>
+              {title}
+            </a>
           </div>
         );
       })}
