@@ -45,12 +45,14 @@
 - **계속 업데이트 및 개선:**
   - 프로젝트를 지속적으로 업데이트하여 새로운 기능을 도입하거나 사용자 피드백을 수용하여 개선 사항을 반영하세요.
 
-your-start-page/
+## 프로젝트 구조
+
 |-- public/
 | |-- images/
 | | |-- backgrounds/
 | | | |-- default.jpg
 | |-- favicon.ico
+
 |-- src/
 | |-- components/
 | | |-- SearchBar.js
@@ -60,19 +62,22 @@ your-start-page/
 | | |-- NewsFeed.js
 | | |-- QuoteWidget.js
 | | |-- CustomWidget.js
+
 | |-- pages/
 | | |-- index.jsx
 | | |-- settings.jsx
 | | |-- login.jsx
+
 | |-- styles/
 | | |-- globals.css
 | | |-- index.css
+
 | |-- utils/
 | | |-- api.js
 | | |-- helpers.js
 | | |-- constants.js
+
 |-- .gitignore
 |-- next.config.js
 |-- package.json
 |-- README.md
-ㅎ
