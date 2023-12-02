@@ -47,37 +47,33 @@
 
 ## 프로젝트 구조
 
-|-- public/
-| |-- images/
-| | |-- backgrounds/
-| | | |-- default.jpg
-| |-- favicon.ico
-
-|-- src/
-| |-- components/
-| | |-- SearchBar.js
-| | |-- Bookmarks.js
-| | |-- WeatherWidget.js
-| | |-- Clock.js
-| | |-- NewsFeed.js
-| | |-- QuoteWidget.js
-| | |-- CustomWidget.js
-
-| |-- pages/
-| | |-- index.jsx
-| | |-- settings.jsx
-| | |-- login.jsx
-
-| |-- styles/
-| | |-- globals.css
-| | |-- index.css
-
-| |-- utils/
-| | |-- api.js
-| | |-- helpers.js
-| | |-- constants.js
-
-|-- .gitignore
-|-- next.config.js
-|-- package.json
-|-- README.md
+- my-portal/
+  - public/
+    - images/
+      - backgrounds/
+        - default.jpg
+    - favicon.ico
+  - src/
+    - components/
+      - SearchBar.js
+      - Bookmarks.js
+      - WeatherWidget.js
+      - Clock.js
+      - NewsFeed.js
+      - QuoteWidget.js
+      - CustomWidget.js
+    - pages/
+      - index.jsx
+      - settings.jsx
+      - login.jsx
+    - styles/
+      - globals.css
+      - index.css
+    - utils/
+      - api.js
+      - helpers.js
+      - constants.js
+  - .gitignore
+  - next.config.js
+  - package.json
+  - README.md
