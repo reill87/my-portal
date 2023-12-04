@@ -1,22 +1,37 @@
 'use client';
 
-import { useState } from 'react';
+import { MouseEventHandler, useEffect, useState } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { Bookmark } from '@/components/Bookmark/Bookmarks';
 import Button from '@/components/Button';
-
 export default function Home() {
-  const addNewData = () => {
-    //TODO: supabase 연동 하기
-  };
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [bookMark, setBookMark] = useState<Bookmark>({
     id: -1,
     title: '',
     url: '',
   });
+
+  const saveDataBase = () => {
+    //TODO: supabase 연동 하기
+  };
+
+  useEffect(() => {
+    setBookMark({
+      id: Number(searchParams.get('id')) ?? -1,
+      title: searchParams.get('title') ?? '',
+      url: searchParams.get('url') ?? '',
+    });
+  }, [pathname, searchParams]);
+
+  if (bookMark && bookMark?.id && bookMark.id < 0) {
+    return;
+  }
+
   return (
     <>
-      {/* TODO: Edit하고 공통 되는 부분 합쳐주기 */}
-      <h2>Add Bookmarks</h2>
+      <h2>Edit Bookmarks</h2>
       <div className='w-full max-w-xs'>
         <form className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4'>
           <div className='mb-4'>
@@ -66,7 +81,7 @@ export default function Home() {
             className={'mt-3'}
             onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
               e.preventDefault();
-              console.log('add', bookMark);
+              console.log('save', bookMark);
             }}
           ></Button>
         </form>

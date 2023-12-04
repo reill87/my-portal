@@ -3,15 +3,18 @@ import clsx from 'clsx';
 export interface buttonProps {
   name: string;
   className: string;
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 function Button({ name, className, onClick }: buttonProps) {
-  const defaultClass =
-    'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded';
-
   return (
-    <button onClick={onClick} className={clsx(defaultClass, className)}>
+    <button
+      onClick={onClick}
+      className={clsx(
+        'bg-cyan-600 hover:bg-cyan-700 text-white font-bold p-2 border border-blue-700 rounded',
+        className
+      )}
+    >
       {name}
     </button>
   );
