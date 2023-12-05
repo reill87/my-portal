@@ -1,6 +1,8 @@
 import Button from '../Button';
 import Link from 'next/link';
 import LinkButton from '../LinkButton';
+import { cookies } from 'next/headers';
+import { getBookmark } from './getBookmark';
 
 export interface Bookmark {
   id: number;
@@ -9,18 +11,9 @@ export interface Bookmark {
   thumbnailUrl?: string;
 }
 function Bookmarks() {
-  const bookMarkList: Bookmark[] = [
-    {
-      id: 0,
-      title: 'Naver',
-      url: 'https://naver.com',
-    },
-    { id: 1, title: 'Daum', url: 'https://daum.net' },
-  ];
+  const bookMarkList: Bookmark[] = getBookmark();
 
-  const setEditData = ({ title, url }: Bookmark) => {
-    console.log(title, url);
-  };
+  console.log('bookMarkList', bookMarkList);
 
   return (
     <div className='p-10 flex-col justify-center bg-stone-800 text-orange-500 w-full text-center'>

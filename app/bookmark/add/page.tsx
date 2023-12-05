@@ -3,11 +3,25 @@
 import { useState } from 'react';
 import { Bookmark } from '@/components/Bookmark/Bookmarks';
 import Button from '@/components/Button';
+import { setBookmark } from '@/components/Bookmark/getBookmark';
 
 export default function Home() {
-  const addNewData = () => {
-    //TODO: supabase 연동 하기
+  const addNewData = async () => {
+    const data = await fetch('/api/bookmark/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(bookMark),
+    });
+
+    if (data.status === 200) {
+      location.href = '/bookmark';
+    }
+
+    console.log(data);
   };
+
   const [bookMark, setBookMark] = useState<Bookmark>({
     id: -1,
     title: '',
@@ -66,7 +80,7 @@ export default function Home() {
             className={'mt-3'}
             onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
               e.preventDefault();
-              console.log('add', bookMark);
+              addNewData();
             }}
           ></Button>
         </form>
