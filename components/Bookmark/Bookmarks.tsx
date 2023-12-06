@@ -1,19 +1,15 @@
 import Button from '../Button';
-import Link from 'next/link';
 import LinkButton from '../LinkButton';
-import { cookies } from 'next/headers';
 import { getBookmark } from './getBookmark';
 
 export interface Bookmark {
-  id: number;
+  id: string;
   title: string;
   url: string;
   thumbnailUrl?: string;
 }
 function Bookmarks() {
   const bookMarkList: Bookmark[] = getBookmark();
-
-  console.log('bookMarkList', bookMarkList);
 
   return (
     <div className='p-10 flex-col justify-center bg-stone-800 text-orange-500 w-full text-center'>
@@ -29,7 +25,7 @@ function Bookmarks() {
             </a>
             <LinkButton
               href={{
-                pathname: '/bookmark/edit',
+                pathname: '/bookmark/',
                 query: {
                   id,
                   title,

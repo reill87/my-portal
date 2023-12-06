@@ -8,7 +8,7 @@ export default function Home() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [bookMark, setBookMark] = useState<Bookmark>({
-    id: -1,
+    id: '',
     title: '',
     url: '',
   });
@@ -19,13 +19,13 @@ export default function Home() {
 
   useEffect(() => {
     setBookMark({
-      id: Number(searchParams.get('id')) ?? -1,
+      id: searchParams.get('id') ?? '',
       title: searchParams.get('title') ?? '',
       url: searchParams.get('url') ?? '',
     });
   }, [pathname, searchParams]);
 
-  if (bookMark && bookMark?.id && bookMark.id < 0) {
+  if (bookMark && bookMark?.id && bookMark.id !== '') {
     return;
   }
 

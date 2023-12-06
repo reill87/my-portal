@@ -16,7 +16,12 @@ export const getBookmark = (): Bookmark[] | [] => {
 
 export const setBookmark = (bookmark: Bookmark) => {
   const cookieStore = cookies();
-  cookieStore.set(MY_PORTAL_BOOKMARK_KEY, JSON.stringify([bookmark]), {
-    path: '/',
-  });
+  const items = getBookmark();
+  cookieStore.set(
+    MY_PORTAL_BOOKMARK_KEY,
+    JSON.stringify([...items, bookmark]),
+    {
+      path: '/',
+    }
+  );
 };

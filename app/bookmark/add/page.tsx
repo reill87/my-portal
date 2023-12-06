@@ -4,26 +4,29 @@ import { useState } from 'react';
 import { Bookmark } from '@/components/Bookmark/Bookmarks';
 import Button from '@/components/Button';
 import { setBookmark } from '@/components/Bookmark/getBookmark';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Home() {
-  const addNewData = async () => {
+  const addNewData = async (bookMarkData: Bookmark) => {
     const data = await fetch('/api/bookmark/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(bookMark),
+      body: JSON.stringify({
+        id: uuidv4(),
+        title: bookMarkData.title,
+        url: bookMarkData.url,
+      } satisfies Bookmark),
     });
 
     if (data.status === 200) {
       location.href = '/bookmark';
     }
-
-    console.log(data);
   };
 
   const [bookMark, setBookMark] = useState<Bookmark>({
-    id: -1,
+    id: '',
     title: '',
     url: '',
   });
@@ -80,7 +83,7 @@ export default function Home() {
             className={'mt-3'}
             onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
               e.preventDefault();
-              addNewData();
+              addNewData(bookMark);
             }}
           ></Button>
         </form>
