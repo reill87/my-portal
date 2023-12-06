@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Button from '../Button';
 import LinkButton from '../LinkButton';
 import { getBookmark } from './getBookmark';
@@ -10,32 +11,46 @@ export interface Bookmark {
 }
 function Bookmarks() {
   const bookMarkList: Bookmark[] = getBookmark();
+  console.log('bookMarkList', bookMarkList);
 
   return (
     <div className='p-10 flex-col justify-center bg-stone-800 text-orange-500 w-full text-center'>
       <h2>This is Your book marks</h2>
-      {bookMarkList.map(({ id, title, url }) => {
+      {bookMarkList.map(({ id, title, url, thumbnailUrl }) => {
         return (
           <div
             key={url}
-            className='text-white text-left mt-2 border-2 p-2 mr-3'
+            className='flex justify-between text-white text-left mt-2 border-2 p-2 mr-3'
           >
-            <a href={url} target='_blank' className='pr-3 hover:text-blue-500'>
-              {title} ➡️✈️➡️ ({url})
+            <a
+              href={url}
+              target='_blank'
+              className='flex items-center pr-3 hover:text-blue-500'
+            >
+              {thumbnailUrl ? (
+                <img className='p-0.5 w-7 h-7' src={thumbnailUrl} alt={title} />
+              ) : (
+                // <Image width={20} height={20} alt={title} src={thumbnailUrl} />
+                <></>
+              )}{' '}
+              ✈️
+              <span>{title}</span>
             </a>
-            <LinkButton
-              href={{
-                pathname: '/bookmark/',
-                query: {
-                  id,
-                  title,
-                  url,
-                },
-              }}
-              name={'Edit'}
-              className={'mr-3'}
-            />
-            <Button name='delete' className='text-red-300 ' />
+            <div>
+              <LinkButton
+                href={{
+                  pathname: '/bookmark/',
+                  query: {
+                    id,
+                    title,
+                    url,
+                  },
+                }}
+                name={'Edit'}
+                className={'mr-3'}
+              />
+              <Button name='delete' className='text-red-300 ' />
+            </div>
           </div>
         );
       })}
