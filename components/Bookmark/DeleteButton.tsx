@@ -1,7 +1,7 @@
 'use client';
 import Button, { buttonProps } from '../Button';
 import { useRouter } from 'next/navigation';
-import { deleteBookmark } from './getBookmark';
+import { deleteBookmark } from './bookmarkService';
 
 interface deleteButtonProps extends buttonProps {
   id: string;

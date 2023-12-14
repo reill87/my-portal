@@ -1,4 +1,4 @@
-import { deleteBookmark } from '@/components/Bookmark/getBookmark';
+import { deleteBookmark } from '@/components/Bookmark/bookmarkService';
 
 export async function POST(request: Request) {
   const { id } = await request.json();

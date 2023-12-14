@@ -34,3 +34,23 @@ export const setBookmark = (bookmark: Bookmark) => {
     }
   );
 };
+
+export const editBookmark = (bookMark: Bookmark) => {
+  const cookieStore = cookies();
+  const bookMarkList: Bookmark[] = getBookmark();
+  cookieStore.set(
+    MY_PORTAL_BOOKMARK_KEY,
+    JSON.stringify(
+      bookMarkList.map((item) => {
+        if (item.id === bookMark.id) {
+          return {
+            ...item,
+            title: bookMark.title,
+            url: bookMark.url,
+          };
+        }
+        return item;
+      })
+    )
+  );
+};

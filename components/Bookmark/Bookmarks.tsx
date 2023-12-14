@@ -1,5 +1,5 @@
 import LinkButton from '../LinkButton';
-import { getBookmark } from './getBookmark';
+import { getBookmark } from './bookmarkService';
 import DeleteButton from './DeleteButton';
 
 export interface Bookmark {
@@ -12,7 +12,7 @@ function Bookmarks() {
   const bookMarkList: Bookmark[] = getBookmark();
 
   return (
-    <div className='p-10 flex-col justify-center bg-stone-800 text-orange-500 w-full text-center'>
+    <div className='p-10 flex-col justify-center text-orange-500 w-full text-center'>
       <h2>This is Your book marks</h2>
       {bookMarkList.map(({ id, title, url, thumbnailUrl }) => {
         return (
@@ -37,7 +37,7 @@ function Bookmarks() {
             <div>
               <LinkButton
                 href={{
-                  pathname: '/bookmark/',
+                  pathname: '/bookmark/edit',
                   query: {
                     id,
                     title,
