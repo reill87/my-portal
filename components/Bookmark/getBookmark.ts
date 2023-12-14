@@ -14,6 +14,15 @@ export const getBookmark = (): Bookmark[] | [] => {
   return [];
 };
 
+export const deleteBookmark = (deleteItemId: string) => {
+  const cookieStore = cookies();
+  const bookMarkList: Bookmark[] = getBookmark();
+  cookieStore.set(
+    MY_PORTAL_BOOKMARK_KEY,
+    JSON.stringify(bookMarkList.filter(({ id }) => id !== deleteItemId))
+  );
+};
+
 export const setBookmark = (bookmark: Bookmark) => {
   const cookieStore = cookies();
   const items = getBookmark();
