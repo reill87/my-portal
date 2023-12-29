@@ -1,5 +1,5 @@
 import { Bookmark } from '@/components/Bookmark/Bookmarks';
-import { setBookmark } from '@/components/Bookmark/bookmarkService';
+import { setBookmark } from '@/app/services/BookMark';
 import * as cheerio from 'cheerio';
 
 export async function POST(request: Request) {

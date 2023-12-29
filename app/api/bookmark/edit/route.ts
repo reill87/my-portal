@@ -1,4 +1,4 @@
-import { editBookmark } from '@/components/Bookmark/bookmarkService';
+import { editBookmark } from '@/app/services/BookMark';
 import { getFaviconInfo } from '../add/route';
 
 export async function POST(request: Request) {

@@ -1,5 +1,5 @@
 import LinkButton from '../LinkButton';
-import { getBookmark } from './bookmarkService';
+import { getBookmark } from '../../app/services/BookMark';
 import DeleteButton from './DeleteButton';
 
 export interface Bookmark {

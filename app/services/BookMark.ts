@@ -1,4 +1,4 @@
-import { Bookmark } from './Bookmarks';
+import { Bookmark } from '../../components/Bookmark/Bookmarks';
 import { cookies } from 'next/headers';
 
 const MY_PORTAL_BOOKMARK_KEY = 'my_portal_bookmark_key';

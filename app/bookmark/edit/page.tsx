@@ -4,7 +4,7 @@ import { MouseEventHandler, useEffect, useState } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { Bookmark } from '@/components/Bookmark/Bookmarks';
 import Button from '@/components/Button';
-import { editBookmark } from '@/components/Bookmark/bookmarkService';
+import { editBookmark } from '@/app/services/BookMark';
 export default function Home() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
