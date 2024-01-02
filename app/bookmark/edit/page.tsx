@@ -4,6 +4,7 @@ import { MouseEventHandler, useEffect, useState } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { Bookmark } from '@/components/Bookmark/Bookmarks';
 import Button from '@/components/Button';
+import { editBookmark } from '@/app/services/BookMark';
 export default function Home() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -13,11 +14,22 @@ export default function Home() {
     url: '',
   });
 
-  const saveDataBase = () => {
-    //TODO: supabase 연동 하기
-  };
+  async function handleSaveBookmark() {
+    const data = await fetch('/api/bookmark/edit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(bookMark),
+    });
+
+    if (data.status === 200) {
+      location.href = '/bookmark';
+    }
+  }
 
   useEffect(() => {
+    console.log(searchParams.get('id'));
     setBookMark({
       id: searchParams.get('id') ?? '',
       title: searchParams.get('title') ?? '',
@@ -25,7 +37,11 @@ export default function Home() {
     });
   }, [pathname, searchParams]);
 
-  if (bookMark && bookMark?.id && bookMark.id !== '') {
+  useEffect(() => {
+    console.log('bookMark', bookMark);
+  }, [bookMark]);
+
+  if (bookMark.id === '') {
     return;
   }
 
@@ -79,10 +95,7 @@ export default function Home() {
           <Button
             name={'Save'}
             className={'mt-3'}
-            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-              e.preventDefault();
-              console.log('save', bookMark);
-            }}
+            onClick={handleSaveBookmark}
           ></Button>
         </form>
       </div>

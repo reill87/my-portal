@@ -11,7 +11,6 @@ export interface Bookmark {
 }
 function Bookmarks() {
   const bookMarkList: Bookmark[] = getBookmark();
-  console.log("bookMarkList", bookMarkList);
 
   return (
     <div className="p-10 flex-col justify-center bg-stone-800 text-orange-500 w-full text-center">
@@ -39,7 +38,7 @@ function Bookmarks() {
             <div>
               <LinkButton
                 href={{
-                  pathname: "/bookmark/",
+                  pathname: '/bookmark/edit',
                   query: {
                     id,
                     title,
@@ -49,7 +48,7 @@ function Bookmarks() {
                 name={"Edit"}
                 className={"mr-3"}
               />
-              <Button name="delete" className="text-red-300 " />
+              <DeleteButton id={id} name='delete' className='text-red-300' />
             </div>
           </div>
         );

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Bookmark } from '@/components/Bookmark/Bookmarks';
 import Button from '@/components/Button';
-import { setBookmark } from '@/components/Bookmark/getBookmark';
+import { setBookmark } from '@/app/services/BookMark';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function Home() {

@@ -1,10 +1,37 @@
 import { Bookmark } from '@/components/Bookmark/Bookmarks';
-import { setBookmark } from '@/components/Bookmark/getBookmark';
+import { setBookmark } from '@/app/services/BookMark';
 import * as cheerio from 'cheerio';
 
 export async function POST(request: Request) {
   const { id, title, url }: Bookmark = await request.json();
 
+  const faviconUrl = await getFaviconInfo(url);
+
+  console.log(faviconUrl);
+
+  if (faviconUrl) {
+    setBookmark({
+      id,
+      title,
+      url,
+      thumbnailUrl: getValidFaviconUrl(faviconUrl, url),
+    });
+  } else {
+    // TODO: handle cannot get faviconUrl
+    setBookmark({
+      id,
+      title,
+      url,
+      thumbnailUrl: 'https://github.githubassets.com/favicons/favicon.svg',
+    });
+  }
+
+  return new Response(null, {
+    status: 200,
+  });
+}
+
+export const getFaviconInfo = async (url: string) => {
   try {
     // 웹사이트의 HTML 가져오기
     const response = await fetch(url);
@@ -25,23 +52,13 @@ export async function POST(request: Request) {
 
     // 적절한 우선순위로 favicon 경로 선택
     const faviconUrl = faviconLink || faviconMeta || '';
-    console.log('faviconUrl', faviconUrl);
-    setBookmark({
-      id,
-      title,
-      url,
-      thumbnailUrl: getValidFaviconUrl(faviconUrl, url),
-    });
+    return getValidFaviconUrl(faviconUrl, url);
   } catch (error) {
     console.error('Error fetching favicon:', error);
   }
+};
 
-  return new Response(null, {
-    status: 200,
-  });
-}
-
-const getValidFaviconUrl = (faviconUrl: string, url: string) => {
+const getValidFaviconUrl = (faviconUrl: string, url: string): string => {
   if (faviconUrl.includes('http')) {
     return faviconUrl;
   }
