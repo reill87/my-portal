@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Button from "../Button";
 import LinkButton from "../LinkButton";
-import { getBookmark } from "./getBookmark";
 import RandomBackground from "../RandomBackground";
+import { getBookmark } from "@/app/services/BookMark";
 export interface Bookmark {
   id: string;
   title: string;
@@ -38,7 +38,7 @@ function Bookmarks() {
             <div>
               <LinkButton
                 href={{
-                  pathname: '/bookmark/edit',
+                  pathname: "/bookmark/edit",
                   query: {
                     id,
                     title,
@@ -48,7 +48,7 @@ function Bookmarks() {
                 name={"Edit"}
                 className={"mr-3"}
               />
-              <DeleteButton id={id} name='delete' className='text-red-300' />
+              <DeleteButton id={id} name="delete" className="text-red-300" />
             </div>
           </div>
         );
