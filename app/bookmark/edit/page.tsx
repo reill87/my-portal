@@ -29,6 +29,10 @@ export default function Home() {
   }
 
   useEffect(() => {
+    if (!searchParams) {
+      return;
+    }
+
     console.log(searchParams.get('id'));
     setBookMark({
       id: searchParams.get('id') ?? '',
