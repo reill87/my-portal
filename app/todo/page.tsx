@@ -14,7 +14,13 @@ export interface TodoDetail {
   onClick?: () => void;
 }
 
-const getTodoList = async (): Promise<TodoItem[]> => {
+interface TodoListResponse {
+  todoItems: TodoItem[];
+}
+
+const getTodoList = async (): Promise<TodoListResponse> => {
+  console.log('getTodoList');
+
   const response = await fetch(
     process.env.NEXT_PUBLIC_BASE_URL + '/api/todo/getTodo',
     {
@@ -22,6 +28,7 @@ const getTodoList = async (): Promise<TodoItem[]> => {
       headers: {
         'Content-Type': 'application/json',
       },
+      cache: 'no-cache',
     }
   );
 
@@ -29,13 +36,13 @@ const getTodoList = async (): Promise<TodoItem[]> => {
 };
 
 export default async function Todo() {
-  const todoItems = await getTodoList();
+  const todoList = await getTodoList();
 
-  console.log(todoItems);
+  console.log('todoList', todoList);
 
   return (
     <>
-      <List todoList={todoItems} />
+      <List todoList={todoList} />
     </>
   );
 }

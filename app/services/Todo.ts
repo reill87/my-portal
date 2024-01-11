@@ -26,27 +26,28 @@ export const getTodo = (): TodoItem[] | [] => {
 export const setTodo = (todoItem: TodoItem) => {
   const cookieStore = cookies();
   const items = getTodo();
+  console.log('setTodo', todoItem);
+
   cookieStore.set(MY_PORTAL_TODO_KEY, JSON.stringify([...items, todoItem]), {
     path: '/',
   });
 };
 
-// export const editBookmark = (bookMark: Bookmark) => {
-//   const cookieStore = cookies();
-//   const bookMarkList: Bookmark[] = getBookmark();
-//   cookieStore.set(
-//     MY_PORTAL_BOOKMARK_KEY,
-//     JSON.stringify(
-//       bookMarkList.map((item) => {
-//         if (item.id === bookMark.id) {
-//           return {
-//             ...item,
-//             title: bookMark.title,
-//             url: bookMark.url,
-//           };
-//         }
-//         return item;
-//       })
-//     )
-//   );
-// };
+export const editTodo = (todoItem: TodoItem) => {
+  const cookieStore = cookies();
+  const todos: TodoItem[] = getTodo();
+  cookieStore.set(
+    MY_PORTAL_TODO_KEY,
+    JSON.stringify(
+      todos.map((todo) => {
+        if (todo.category === todoItem.category) {
+          return {
+            ...todo,
+            todoItem,
+          };
+        }
+        return todo;
+      })
+    )
+  );
+};
