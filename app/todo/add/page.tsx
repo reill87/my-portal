@@ -15,8 +15,9 @@ export default function Home() {
   const searchParams = useSearchParams();
 
   const addNewData = async (todo: AddTodo) => {
-    const hasCategory = searchParams?.has('category');
-    const category = searchParams?.get('category');
+    const hasCategory = searchParams?.has('name');
+    const category = searchParams?.get('name');
+    const id = searchParams?.get('id');
 
     const data = await fetch('/api/todo/add', {
       method: 'POST',
@@ -27,6 +28,7 @@ export default function Home() {
         name: todo.name,
         hasCategory,
         category,
+        id,
       }),
     });
 

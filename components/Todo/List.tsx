@@ -4,30 +4,74 @@ import { TodoItem } from '@/app/todo/page';
 import LinkButton from '../LinkButton';
 import Detail from './Detail';
 import Button from '../Button';
+import { useState } from 'react';
+import { UUID } from 'crypto';
 
 interface TodoListProps {
-  todoList: {
-    todoItems: TodoItem[];
-  };
+  todoList: TodoItem[];
 }
 
 export default function List({ todoList }: TodoListProps) {
-  const handleDeleteItem = () => {};
+  const [list, setList] = useState(todoList);
+
+  const handleDeleteItem = async (id: number) => {
+    if (confirm('Really delete ??')) {
+      const data = await fetch('/api/todo/delete/detail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id,
+        }),
+      });
+
+      if (data.status === 200) {
+        alert('delete success');
+        const updatedList = list.map((todo) => {
+          return {
+            ...todo,
+            todo_detail: todo.todo_detail.filter((detail) => detail.id !== id),
+          };
+        });
+
+        setList(updatedList);
+      }
+    }
+  };
+  const handleDeleteCategory = async (id: UUID) => {
+    if (confirm(`Really delete ??`)) {
+      const data = await fetch('/api/todo/delete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id,
+        }),
+      });
+
+      if (data.status === 200) {
+        alert('delete success');
+        const updatedList = list.filter((todo) => todo.id !== id);
+
+        setList(updatedList);
+      }
+    }
+  };
   const handleAddItem = () => {
     window.location.href = '/todo/add';
   };
 
-  console.log('todoList', todoList);
-
   return (
     <div className='w-full'>
       <ul className='list-disc'>
-        {todoList.todoItems.length > 0 &&
-          todoList.todoItems.map(({ category, details }, i) => {
+        {list.length > 0 &&
+          list.map(({ name, id, todo_detail }) => {
             return (
-              <li key={i}>
+              <li key={id}>
                 <h3 className='font-bold mb-2 mt-2'>
-                  <span className='mr-3'>{category}</span>
+                  <span className='mr-3'>{name}</span>
 
                   <LinkButton
                     className='mt-3'
@@ -39,21 +83,34 @@ export default function List({ todoList }: TodoListProps) {
                     href={{
                       pathname: '/todo/add',
                       query: {
-                        category,
+                        name,
+                        id,
                       },
                     }}
                   />
+
+                  <Button
+                    className='mt-3 ml-3'
+                    padding='medium'
+                    size='small'
+                    name='삭제'
+                    color='pink'
+                    fontColor='default'
+                    onClick={() => handleDeleteCategory(id)}
+                  />
                 </h3>
 
-                {details.length > 0 && (
+                {todo_detail.length > 0 && (
                   <ul className='list-none bg-purple-300 text-blue-600 font-bold'>
-                    {details.map((detail, i) => {
+                    {todo_detail.map((detail, i) => {
                       return (
                         <>
                           <Detail
                             key={i}
-                            {...detail}
-                            onClick={handleDeleteItem}
+                            detail={{
+                              ...detail,
+                              onClick: () => handleDeleteItem(detail.id),
+                            }}
                           />
                         </>
                       );

@@ -1,31 +1,44 @@
-import { Bookmark } from '@/components/Bookmark/Bookmarks';
-import { TodoItem } from '@/app/todo/page';
-import { editTodo, getTodo, setTodo } from '@/app/services/Todo';
+import { cookies } from 'next/headers';
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
+import { randomUUID } from 'crypto';
 
 export async function POST(request: Request) {
-  const { name, hasCategory, category } = await request.json();
+  const cookieStore = cookies();
+  const supabase = createRouteHandlerClient({ cookies: () => cookieStore })
 
-  const todoItems: TodoItem[] = getTodo();
+  const { name, hasCategory, category,id } = await request.json();
 
-  if (hasCategory && category) {
-    // add details
-    const todoItem = todoItems.find((item) => item.category === category);
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-    if (todoItem) {
-      todoItem.details.push({
+  console.log('user',user);
+  
+
+  if(user?.id) {
+
+    if(hasCategory) {
+      const data = await supabase.from('todo_detail').insert({
         name,
-      });
-      editTodo(todoItem);
-    }
-  } else {
-    // add new category
-    setTodo({
-      category: name,
-      details: [],
-    });
-  }
+        category_id:id,        
+      })
 
-  return new Response(null, {
-    status: 200,
-  });
+      console.log('add detail',data);
+      
+    } else {
+      const data = await supabase.from('todo_category').insert({
+        name,
+        id: randomUUID(),
+        user_id:user.id
+      })
+    }
+
+    return new Response(null, {
+      status: 200,
+    });
+  } else {
+    return new Response(null, {
+      status: 404,
+    })
+  }
 }
