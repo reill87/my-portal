@@ -11,6 +11,12 @@ interface TodoListProps {
   todoList: TodoItem[];
 }
 
+export interface TodoDetailUpdateProps {
+  id: number;
+  is_done?: boolean;
+  name?: string;
+}
+
 export default function List({ todoList }: TodoListProps) {
   const [list, setList] = useState(todoList);
 
@@ -39,6 +45,7 @@ export default function List({ todoList }: TodoListProps) {
       }
     }
   };
+
   const handleDeleteCategory = async (id: UUID) => {
     if (confirm(`Really delete ??`)) {
       const data = await fetch('/api/todo/delete', {
@@ -59,6 +66,40 @@ export default function List({ todoList }: TodoListProps) {
       }
     }
   };
+
+  const handleUpdateDetail = async (params: TodoDetailUpdateProps) => {
+    console.log('handleUpdateDetail', params);
+    const data = await fetch('/api/todo/update/detail', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...params,
+      }),
+    });
+
+    if (data.status === 200) {
+      const updatedList = list.map((todo) => {
+        return {
+          ...todo,
+          todo_detail: todo.todo_detail.map((detail) => {
+            if (detail.id === params.id) {
+              return {
+                ...detail,
+                is_done: params.is_done ?? detail.is_done,
+                name: params.name ?? detail.name,
+              };
+            }
+            return detail;
+          }),
+        };
+      });
+
+      setList(updatedList);
+    }
+  };
+
   const handleAddItem = () => {
     window.location.href = '/todo/add';
   };
@@ -110,6 +151,7 @@ export default function List({ todoList }: TodoListProps) {
                             detail={{
                               ...detail,
                               onClick: () => handleDeleteItem(detail.id),
+                              onUpdate: handleUpdateDetail,
                             }}
                           />
                         </>
