@@ -1,64 +1,35 @@
 'use client';
 
-import { MouseEventHandler, useEffect, useState } from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { Bookmark } from '@/components/Bookmark/Bookmarks';
-import Button from '@/components/Button';
+import { useState } from 'react';
+import Button from '../Button';
+import { Bookmark } from './Bookmarks';
 
-interface EditBookMark {
-  id: string;
-  title: string;
-  url: string;
-}
-
-export default function Home() {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const [bookMark, setBookMark] = useState<EditBookMark>({
-    id: '',
-    title: '',
-    url: '',
-  });
-
-  async function handleSaveBookmark(event: MouseEvent) {
-    event.preventDefault();
-    const data = await fetch('/api/bookmark/edit', {
+export default function AddBookMark() {
+  const addNewData = async (bookMarkData: Bookmark) => {
+    const data = await fetch('/api/bookmark/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(bookMark),
+      body: JSON.stringify({
+        title: bookMarkData.title,
+        url: bookMarkData.url,
+      }),
     });
-
-    console.log('edit', data);
 
     if (data.status === 200) {
       location.href = '/bookmark';
-    } else {
-      alert('수정에 실패 하였습니다.');
-      location.href = '/bookmark';
     }
-  }
+  };
 
-  useEffect(() => {
-    if (!searchParams) {
-      return;
-    }
-
-    setBookMark({
-      id: searchParams.get('id') ?? '',
-      title: searchParams.get('title') ?? '',
-      url: searchParams.get('url') ?? '',
-    });
-  }, [pathname, searchParams]);
-
-  useEffect(() => {
-    console.log('bookMark', bookMark);
-  }, [bookMark]);
-
+  const [bookMark, setBookMark] = useState<Bookmark>({
+    title: '',
+    url: '',
+  });
   return (
     <>
-      <h2>Edit Bookmarks</h2>
+      {/* TODO: Edit하고 공통 되는 부분 합쳐주기 */}
+      <h2>Add Bookmarks</h2>
       <div className='w-full max-w-xs'>
         <form className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4'>
           <div className='mb-4'>
@@ -106,7 +77,10 @@ export default function Home() {
           <Button
             name={'Save'}
             className={'mt-3'}
-            onClick={handleSaveBookmark}
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              e.preventDefault();
+              addNewData(bookMark);
+            }}
           ></Button>
         </form>
       </div>

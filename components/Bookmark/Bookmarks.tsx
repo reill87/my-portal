@@ -1,22 +1,24 @@
-import Image from 'next/image';
-import Button from '../Button';
+import { UUID, randomBytes } from 'crypto';
 import LinkButton from '../LinkButton';
 import RandomBackground from '../RandomBackground';
-import { getBookmark } from '@/app/services/BookMark';
 import DeleteButton from './DeleteButton';
 export interface Bookmark {
-  id: string;
+  id?: UUID;
+  user_id?: UUID;
   title: string;
   url: string;
-  thumbnailUrl?: string;
+  thumbnail_url?: string;
 }
-function Bookmarks() {
-  const bookMarkList: Bookmark[] = getBookmark();
 
+interface BookMarkListProps {
+  bookMarkList: Bookmark[];
+}
+
+function Bookmarks({ bookMarkList }: BookMarkListProps) {
   return (
     <div className='p-10 flex-col justify-center bg-stone-800 text-orange-500 w-full text-center'>
       <h2>This is Your book marks</h2>
-      {bookMarkList.map(({ id, title, url, thumbnailUrl }) => {
+      {bookMarkList.map(({ id, title, url, thumbnail_url }) => {
         return (
           <div
             key={url}
@@ -27,8 +29,12 @@ function Bookmarks() {
               target='_blank'
               className='flex items-center pr-3 hover:text-blue-500'
             >
-              {thumbnailUrl ? (
-                <img className='p-0.5 w-7 h-7' src={thumbnailUrl} alt={title} />
+              {thumbnail_url ? (
+                <img
+                  className='p-0.5 w-7 h-7'
+                  src={thumbnail_url}
+                  alt={title}
+                />
               ) : (
                 // <Image width={20} height={20} alt={title} src={thumbnailUrl} />
                 <></>

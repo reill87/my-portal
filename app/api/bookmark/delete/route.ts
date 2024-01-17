@@ -1,11 +1,13 @@
-import { deleteBookmark } from '@/app/services/BookMark';
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 
 export async function POST(request: Request) {
+  const cookieStore = cookies();
+  const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
+
   const { id } = await request.json();
 
-  console.log(id);
-
-  deleteBookmark(id);
+  await supabase.from("bookmark").delete().eq("id", id);
 
   return new Response(null, {
     status: 200,
