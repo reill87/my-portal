@@ -18,9 +18,11 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <h1 className='text-center mt-10'>Welcome to My Portal</h1>
+        <h1 className='text-center mt-10 font-extralight'>
+          Welcome to My Portal
+        </h1>
         <main className='flex min-h-screen flex-col items-center p-12'>
-          <nav className='text-amber-600 w-full text-center mb-10'>
+          <nav className='text-white font-extrabold w-full text-center mb-10'>
             <Link href='/info'>Info</Link>&nbsp;|&nbsp;
             <Link href='/bookmark'>Bookmark</Link>&nbsp;|&nbsp;
             <Link href='/search'>Search</Link>&nbsp;|&nbsp;
