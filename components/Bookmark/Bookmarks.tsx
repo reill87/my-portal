@@ -39,8 +39,8 @@ function Bookmarks({ bookMarkList }: BookMarkListProps) {
                 // <Image width={20} height={20} alt={title} src={thumbnailUrl} />
                 <></>
               )}{' '}
-              ✈️
-              <span>{title}</span>
+              <span className='pl-2 pr-2'>✈️</span>
+              <span className='pl-2'>{title}</span>
             </a>
             <div>
               <LinkButton
@@ -55,7 +55,11 @@ function Bookmarks({ bookMarkList }: BookMarkListProps) {
                 name={'Edit'}
                 className={'mr-3'}
               />
-              <DeleteButton id={id} name='delete' className='text-red-300' />
+              <DeleteButton
+                id={id?.toString() || ''}
+                name='delete'
+                className='text-red-300'
+              />
             </div>
           </div>
         );

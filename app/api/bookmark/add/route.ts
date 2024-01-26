@@ -30,7 +30,7 @@ export async function POST(request: Request) {
           user_id: user?.id,
           title,
           url,
-          thumbnail_url: getValidFaviconUrl(faviconUrl, url),
+          thumbnail_url: faviconUrl,
         });
     } catch (e) {
       console.log(e);
@@ -39,7 +39,7 @@ export async function POST(request: Request) {
     // TODO: handle cannot get faviconUrl
     result = await supabase.from("bookmark")
       .insert({
-        user_id: user?.id,
+        id: user?.id,
         title,
         url,
         thumbnail_url: "https://github.githubassets.com/favicons/favicon.svg",
@@ -81,7 +81,8 @@ export const getFaviconInfo = async (url: string) => {
 };
 
 const getValidFaviconUrl = (faviconUrl: string, url: string): string => {
-  if (faviconUrl.includes("http")) {
+  console.log("faviconUrl", faviconUrl);
+  if (faviconUrl.includes("http") || faviconUrl.includes("//")) {
     return faviconUrl;
   }
   return `${url}/${faviconUrl}`;
