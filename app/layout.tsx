@@ -1,9 +1,13 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter as FontSans } from 'next/font/google';
 import './globals.css';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
-const inter = Inter({ subsets: ['latin'] });
+export const fontSans = FontSans({
+  subsets: ['latin'],
+  variable: '--font-sans',
+});
 
 export const metadata: Metadata = {
   title: 'My Portal',
@@ -17,17 +21,24 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className={inter.className}>
+      <body
+        className={cn(
+          'min-h-screen bg-background font-sans antialiased',
+          fontSans.variable
+        )}
+      >
         <h1 className='text-center mt-10 font-extralight'>
           Welcome to My Portal
         </h1>
         <main className='flex min-h-screen flex-col items-center p-12'>
-          <nav className='text-white font-extrabold w-full text-center mb-10'>
+          <nav className='font-extrabold w-full text-center mb-10'>
             <Link href='/info'>Info</Link>&nbsp;|&nbsp;
             <Link href='/bookmark'>Bookmark</Link>&nbsp;|&nbsp;
             <Link href='/search'>Search</Link>&nbsp;|&nbsp;
             <Link href='/todo'>Todo</Link>&nbsp;|&nbsp;
-            <Link href='/clock'>Clock</Link>
+            <Link href='/clock'>Clock</Link>&nbsp;|&nbsp;
+            <Link href='/dailyRoutine'>Daily Routine</Link>&nbsp;|&nbsp;
+            <Link href='/draw'>Draw</Link>
           </nav>
           {children}
         </main>
