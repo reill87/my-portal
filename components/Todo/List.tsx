@@ -68,7 +68,6 @@ export default function List({ todoList }: TodoListProps) {
   };
 
   const handleUpdateDetail = async (params: TodoDetailUpdateProps) => {
-    console.log('handleUpdateDetail', params);
     const data = await fetch('/api/todo/update/detail', {
       method: 'POST',
       headers: {
@@ -142,7 +141,7 @@ export default function List({ todoList }: TodoListProps) {
                 </h3>
 
                 {todo_detail.length > 0 && (
-                  <ul className='list-none bg-purple-300 text-blue-600 font-bold'>
+                  <ul className='list-none text-blue-600 font-bold'>
                     {todo_detail.map((detail, i) => {
                       return (
                         <>

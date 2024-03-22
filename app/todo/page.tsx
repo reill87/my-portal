@@ -1,10 +1,6 @@
-import Button from '@/components/Button';
-import LinkButton from '@/components/LinkButton';
-import Detail from '@/components/Todo/Detail';
 import List from '@/components/Todo/List';
 import { Database } from '@/supabase/supabase';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { QueryData } from '@supabase/supabase-js';
 import { UUID } from 'crypto';
 import { cookies } from 'next/headers';
 
@@ -31,8 +27,6 @@ export default async function Todo() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
-  console.log(user?.id);
 
   const { data: todoItems, error } = await supabase
     .from('todo_category')

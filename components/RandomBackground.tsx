@@ -1,5 +1,5 @@
-import Image from "next/image";
-import styles from "./RandomBackground.module.css";
+import Image from 'next/image';
+import styles from './RandomBackground.module.css';
 
 function RandomBackground() {
   const id = Math.floor(Math.random() * 1000);
@@ -11,10 +11,10 @@ function RandomBackground() {
     <div className={styles.background}>
       <Image
         src={seed}
-        alt="random background"
-        layout="fill"
-        objectFit="cover"
-        objectPosition="center"
+        alt='random background'
+        layout='fill'
+        objectFit='cover'
+        objectPosition='center'
       />
     </div>
   );
