@@ -17,9 +17,9 @@ interface BookMarkListProps {
 
 function Bookmarks({ bookMarkList }: BookMarkListProps) {
   return (
-    <div className='p-10 flex-col justify-center text-orange-500 w-full text-center'>
-      <h2>This is Your book marks</h2>
-      <div className='flex'>
+    <div className='p-10 flex-col justify-center w-full text-center'>
+      <h2 className='font-semibold text-xl'>This is Your book marks</h2>
+      <div className='flex-auto'>
         {bookMarkList.map(({ id, title, url, thumbnail_url }) => {
           return (
             <div

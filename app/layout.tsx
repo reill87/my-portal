@@ -27,7 +27,7 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <h1 className='text-center mt-10 font-extralight'>
+        <h1 className='text-center mt-10 font-bold text-xl'>
           Welcome to My Portal
         </h1>
         <main className='flex min-h-screen flex-col items-center p-12'>
