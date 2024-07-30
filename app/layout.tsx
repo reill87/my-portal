@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter as FontSans } from 'next/font/google';
 import './globals.css';
-import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { Links } from '@/components/Links';
 
 export const fontSans = FontSans({
   subsets: ['latin'],
@@ -31,15 +31,7 @@ export default function RootLayout({
           Welcome to My Portal
         </h1>
         <main className='flex min-h-screen flex-col items-center p-12'>
-          <nav className='font-extrabold w-full text-center mb-10'>
-            <Link href='/info'>Info</Link>&nbsp;|&nbsp;
-            <Link href='/bookmark'>Bookmark</Link>&nbsp;|&nbsp;
-            <Link href='/search'>Search</Link>&nbsp;|&nbsp;
-            <Link href='/todo'>Todo</Link>&nbsp;|&nbsp;
-            <Link href='/clock'>Clock</Link>&nbsp;|&nbsp;
-            <Link href='/dailyRoutine'>Daily Routine</Link>&nbsp;|&nbsp;
-            <Link href='/draw'>Draw</Link>
-          </nav>
+          <Links />
           {children}
         </main>
       </body>
