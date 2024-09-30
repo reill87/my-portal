@@ -101,8 +101,8 @@ ALTER TABLE ONLY "public"."todo_category"
 ALTER TABLE ONLY "public"."todo_detail"
     ADD CONSTRAINT "todo_detail_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "supabase_migrations"."schema_migrations"
-    ADD CONSTRAINT "schema_migrations_pkey" PRIMARY KEY ("version");
+-- ALTER TABLE ONLY "supabase_migrations"."schema_migrations"
+--     ADD CONSTRAINT "schema_migrations_pkey" PRIMARY KEY ("version");
 
 ALTER TABLE ONLY "public"."profiles"
     ADD CONSTRAINT "profiles_id_fkey" FOREIGN KEY (id) REFERENCES auth.users(id) ON DELETE CASCADE;
