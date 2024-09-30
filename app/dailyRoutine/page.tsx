@@ -1,13 +1,14 @@
+'use client';
+
 import DailyRoutineList from '@/components/DailyRoutine/List';
+import { swr_fetcher } from '@/lib/utils';
+import useSWR from 'swr';
 
-export default async function Home() {
-  const dailyRoutineList = await fetch('/api/dailyRoutine/list');
-
-  console.log('dailyRoutineList', dailyRoutineList);
-
-  return (
-    <>
-      <DailyRoutineList />
-    </>
+export default function Home() {
+  const { data, error, isLoading } = useSWR(
+    '/api/dailyRoutine/list',
+    swr_fetcher
   );
+
+  return <>{data && <DailyRoutineList />}</>;
 }

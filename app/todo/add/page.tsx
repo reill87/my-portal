@@ -1,11 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Bookmark } from '@/components/Bookmark/Bookmarks';
 import Button from '@/components/Button';
-import { setBookmark } from '@/app/services/BookMark';
-import { v4 as uuidv4 } from 'uuid';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 interface AddTodo {
   name: string;
