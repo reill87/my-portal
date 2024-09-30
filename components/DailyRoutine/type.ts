@@ -1,3 +1,5 @@
+import { UUID } from "crypto";
+
 export interface DailyRoutine {
   id: string;
   user_id: string;
@@ -5,12 +7,13 @@ export interface DailyRoutine {
   startDate: string;
   description: string;
   endDate: string;
+  details: DailyRoutineDetail[];
 }
 
 export interface DailyRoutineDetail {
-  id: string;
+  id: UUID;
   created_at: string;
   routine_id: string;
   date: string;
-  isComplete: boolean;
+  isCompleted: boolean;
 }

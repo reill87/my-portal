@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  console.log("user", user);
+  console.log("user", user, startDate, description, endDate);
 
   if (user?.id) {
     const data = await supabase.from("DailyRoutine").insert({

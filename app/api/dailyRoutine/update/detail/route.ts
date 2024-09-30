@@ -1,30 +1,36 @@
 import { cookies } from "next/headers";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
-import { TodoDetail } from "@/app/todo/page";
-import { TodoDetailUpdateProps } from "@/components/Todo/List";
+import { DailyRoutineDetail } from "@/components/DailyRoutine/type";
 
 export async function POST(request: Request) {
   const cookieStore = cookies();
   const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
 
-  const { id, is_done, name }: TodoDetail = await request.json();
+  const { routine_id, id, isCompleted, date }: DailyRoutineDetail =
+    await request
+      .json();
 
-  console.log(id, is_done, name);
+  console.log("id", routine_id, id, isCompleted);
 
   try {
-    let updateData: TodoDetailUpdateProps = {
-      id,
-      is_done,
-      name,
-    };
+    if (id) {
+      const result = await supabase.from("DailyRoutineDetail")
+        .update({
+          isCompleted,
+        })
+        .eq("id", id)
+        .select();
 
-    console.log(updateData);
-
-    const result = await supabase.from("todo_detail")
-      .update(updateData)
-      .eq("id", id);
-
-    console.log(result);
+      console.log(result);
+    } else {
+      const result = await supabase.from("DailyRoutineDetail")
+        .insert({
+          isCompleted,
+          routine_id,
+          date,
+        });
+      console.log(result);
+    }
 
     return new Response(null, {
       status: 200,

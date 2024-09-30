@@ -13,7 +13,13 @@ export async function GET(request: Request) {
 
   const { data: dailyRoutine, error } = await supabase
     .from("DailyRoutine")
-    .select("*");
+    .select(`*,
+      details:DailyRoutineDetail (
+      id,
+      routine_id,
+      isCompleted,
+      date
+    )`);
 
   console.log("dailyRoutine get list", dailyRoutine);
 
